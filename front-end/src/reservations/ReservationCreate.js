@@ -1,12 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { createReservation } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert";
 
 function ReservationCreate() {
+    const history = useHistory();
+    const [error, setError] = useState(null);
+
+    //empty form state
+    const initialFormState = {
+        first_name: "",
+        last_name: "",
+        mobile_number: "",
+        reservation_date: "",
+        reservation_time: "",
+        people: 0,
+        created_at: "",
+        updated_at: ""
+    }
+    const [reservation, setReservation] = useState({ ...initialFormState });
+    
+    //change handler
+    const handleChange = ({ target }) => {
+        setReservation({ ...reservation, [target.name]: target.value });
+    }
+
+    //submit handler
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        createReservation(reservation)
+            .then((newReservation) => history.push(`/dashboard?date=${newReservation.reservation_date}`))
+            .catch((error) => setError(error));
+    }
+
+    //reset handler
+    const handleReset = (event) => {
+        event.preventDefault();
+        setReservation({ ...initialFormState });
+    }
+
 
 
     return (
-        <>
+        <main>
             <h1>Create a New Reservation</h1>
-            <form>
+            <ErrorAlert error={error} />
+            <form onSubmit={handleSubmit}>
                 <div className="row mb-3">
                     <div className="col">
                         <label htmlFor="first_name" className="form-label">First Name</label>
@@ -15,6 +54,8 @@ function ReservationCreate() {
                             name="first_name"
                             id="first_name"
                             className="form-control"
+                            onChange={handleChange}
+                            value={reservation.first_name}
                         />
                     </div>
                     <div className="col">
@@ -24,6 +65,8 @@ function ReservationCreate() {
                             name="last_name"
                             id="last_name"
                             className="form-control"
+                            onChange={handleChange}
+                            value={reservation.last_name}
                         />
                     </div>
                 </div>
@@ -35,6 +78,8 @@ function ReservationCreate() {
                             name="mobile_number"
                             id="mobile_number"
                             className="form-control"
+                            onChange={handleChange}
+                            value={reservation.mobile_number}
                             pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                             required
                         />
@@ -46,6 +91,8 @@ function ReservationCreate() {
                             name="reservation_date" 
                             id="reservation_date"
                             className="form-control" 
+                            onChange={handleChange}
+                            value={reservation.reservation_date}
                             placeholder="YYYY-MM-DD" 
                             pattern="\d{4}-\d{2}-\d{2}"
                             required
@@ -57,7 +104,9 @@ function ReservationCreate() {
                             type="time" 
                             name="reservation_time"
                             id="reservation_time"
-                            lassName="form-control" 
+                            className="form-control" 
+                            onChange={handleChange}
+                            value={reservation.reservation_time}
                             placeholder="HH:MM" 
                             pattern="[0-9]{2}:[0-9]{2}"
                             required
@@ -70,6 +119,8 @@ function ReservationCreate() {
                             name="people"
                             id="people"
                             className="form-control"
+                            onChange={handleChange}
+                            value={reservation.people}
                             min="1"
                             max="8"
                             required
@@ -87,17 +138,19 @@ function ReservationCreate() {
                     type="reset"
                     className="btn btn-secondary btn-lg"
                     style={{marginRight: "10px"}}
+                    onClick={handleReset}
                 >
                     Reset Form
                 </button> 
                 <button 
                     type="button"
                     className="btn btn-secondary btn-lg"
+                    onClick={() => history.goBack()}
                 >
                     Cancel
                 </button>            
             </form>
-        </>
+        </main>
     )
 }
 
