@@ -2,7 +2,7 @@ import React from "react";
 
 function ReservationCreate() {
 
-    
+
     return (
         <>
             <h1>Create a New Reservation</h1>
@@ -74,7 +74,28 @@ function ReservationCreate() {
                             max="8"
                             required
                         />
-                </div>                
+                </div>   
+
+                <button 
+                    type="submit"
+                    className="btn btn-primary btn-lg"
+                    style={{marginRight: "10px"}}
+                >
+                    Submit
+                </button>
+                <button 
+                    type="reset"
+                    className="btn btn-secondary btn-lg"
+                    style={{marginRight: "10px"}}
+                >
+                    Reset Form
+                </button> 
+                <button 
+                    type="button"
+                    className="btn btn-secondary btn-lg"
+                >
+                    Cancel
+                </button>            
             </form>
         </>
     )
