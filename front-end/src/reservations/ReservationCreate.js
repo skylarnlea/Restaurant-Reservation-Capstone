@@ -5,8 +5,8 @@ import ErrorAlert from "../layout/ErrorAlert";
 
 function ReservationCreate() {
     const history = useHistory();
-    const [error, setError] = useState(undefined);
-
+    const [error, setError] = useState(null);
+  
     //empty form state
     const initialFormState = {
         first_name: "",
@@ -23,12 +23,16 @@ function ReservationCreate() {
         setReservation({ ...reservation, [target.name]: target.value });
     }
 
+    // const day = new Date(reservation.reservation_date).getUTCDay();
+    // const date = new Date(reservation.reservation_date).setHours(0, 0, 0, 0);
+    // const today = new Date().setHours(0, 0, 0, 0);
+
     //submit handler
     const handleSubmit = (event) => {
         event.preventDefault();
         createReservation(reservation)
-            .then((newReservation) => history.push(`/dashboard?date=${newReservation.reservation_date}`))
-            .catch((error) => setError(error));
+          .then((newReservation) => history.push(`/dashboard?date=${newReservation.reservation_date}`))
+          .catch((error) => setError(error));
     }
 
     //reset handler
@@ -37,10 +41,12 @@ function ReservationCreate() {
         setReservation({ ...initialFormState });
     }
 
-    if (!error) {
         return (
           <main>
             <h1>Create a New Reservation</h1>
+            <ErrorAlert error={error} />
+
+            {/* Reservation form */}
             <form onSubmit={handleSubmit}>
               <div className="row mb-3">
                 <div className="col">
@@ -149,13 +155,5 @@ function ReservationCreate() {
       </main>
     );
   }
-
-  return (
-    <main>
-      <h1>Create a New Reservation</h1>
-      <ErrorAlert error={error} />
-    </main>
-  );
-}
 
 export default ReservationCreate;
