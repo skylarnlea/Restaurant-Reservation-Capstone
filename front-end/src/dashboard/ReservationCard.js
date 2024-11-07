@@ -1,4 +1,5 @@
 import React from "react";
+
 function ReservationCard(
   { reservation_id, 
     first_name, 
@@ -9,7 +10,6 @@ function ReservationCard(
     people
   }
 ) {
-
 
   return (
     <div className="card border-secondary mb-3" style={{maxWidth: "25rem"}}>
