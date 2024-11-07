@@ -31,7 +31,7 @@ function ReservationCreate() {
     const handleSubmit = (event) => {
         event.preventDefault();
         createReservation(reservation)
-          .then((newReservation) => history.push(`/dashboard?date=${newReservation.reservation_date}`))
+          .then((newReservation) => history.push(`/dashboard?date=${newReservation.reservation_date.slice(0, 10)}`))
           .catch((error) => setError(error));
     }
 

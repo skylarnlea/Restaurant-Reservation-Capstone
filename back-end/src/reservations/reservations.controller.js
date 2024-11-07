@@ -86,7 +86,7 @@ function peopleIsNumber(req, res, next) {
   next();
 }
 
-function dateIsNotTuesday(req, res, next) {
+function notOnTuesday(req, res, next) {
   const { reservation_date } = req.body.data;
   const dateString = reservation_date.split("-");
   const numDate = new Date(
@@ -98,29 +98,40 @@ function dateIsNotTuesday(req, res, next) {
     1
   );
   if (numDate.getDay() === 2) {
-    next({ status: 400, message: "restaurant closed on Tuesdays" });
+    next({ status: 400, message: "restaurant is closed on Tuesdays" });
   } else {
     next();
   }
 }
-function dateIsNotPast(req, res, next) {
-  const { reservation_date } = req.body.data;
-  const today = new Date();
-  const dateString = reservation_date.split("-");
-  const resDate = new Date(
-    Number(dateString[0]),
-    Number(dateString[1]) - 1,
-    Number(dateString[2]),
-    0,
-    0,
-    1
-  );
-  if (resDate > today) {
-  next();
+
+function notPastDate(req, res, next) {
+  const { reservation_date, reservation_time } = req.body.data;
+  const [hour, minute] = reservation_time.split(":");
+  let [year, month, day] = reservation_date.split("-");
+  month -= 1;
+  const reservationDate = new Date(year, month, day, hour, minute, 59, 59).getTime();
+  const today = new Date().getTime();
+  if (reservationDate > today) {
+    next();
   } else {
-    next({ status: 400, message: "reservation must be for a future date"});
+    next({
+      status: 400,
+      message: "reservation date and time must be set in the future",
+    });
   }
-};
+}
+
+function isWithinBusinessHours(req, res, next) {
+  const { reservation_time } = req.body.data;
+  if (reservation_time >= "10:30" && reservation_time <= "21:30") {
+    next();
+  } else {
+    next({
+      status: 400,
+      message: "reservation time must be within appropriate business hours"
+    });
+  }
+}
 
 /**
  * Create new reservation handler
@@ -138,8 +149,9 @@ module.exports = {
     hasValidDate,
     peopleIsNumber,
     hasValidTime,
-    dateIsNotTuesday,
-    dateIsNotPast,
+    notOnTuesday,
+    notPastDate,
+    isWithinBusinessHours,
     asyncErrorBoundary(create),
   ],
   list: asyncErrorBoundary(list),
