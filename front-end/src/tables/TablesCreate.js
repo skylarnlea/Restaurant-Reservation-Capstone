@@ -4,7 +4,6 @@ import ErrorAlert from "../layout/ErrorAlert";
 import { createTable } from "../utils/api";
 
 
-
 function TableCreate() {
     const history = useHistory();
     const [error, setError] = useState(null);
