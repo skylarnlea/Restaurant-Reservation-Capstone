@@ -9,9 +9,10 @@ async function list(req, res) {
   if (req.query.date) {
     const data = await service.list(req.query.date);
     res.json({ data });
+  } else {
+      const data = await service.list(today());
+      res.json({ data });
   }
-  const data = await service.list(today());
-  res.json({ data });
 }
 
 /**
@@ -68,13 +69,15 @@ function hasValidDate(req, res, next) {
   next();
 }
 function hasValidTime(req, res, next) {
-  const { data: { reservation_time } = {} } = req.body;
+  const { reservation_time } = req.body.data;
   const timeRegex = new RegExp(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/);
-  if (!reservation_time.match(timeRegex)) {
+  if (reservation_time && reservation_time !== "" && reservation_time.match(timeRegex)) {
+    next();
+  } else {
     next({ status: 400, message: "reservation_time must be a valid time"});
   }
-  next();
 }
+
 function peopleIsNumber(req, res, next) {
   const { data: { people } = {} } = req.body;
   if (!Number.isInteger(people)) {
@@ -83,11 +86,48 @@ function peopleIsNumber(req, res, next) {
   next();
 }
 
+function dateIsNotTuesday(req, res, next) {
+  const { reservation_date } = req.body.data;
+  const dateString = reservation_date.split("-");
+  const numDate = new Date(
+    Number(dateString[0]),
+    Number(dateString[1]) - 1,
+    Number(dateString[2]),
+    0,
+    0,
+    1
+  );
+  if (numDate.getDay() === 2) {
+    next({ status: 400, message: "restaurant closed on Tuesdays" });
+  } else {
+    next();
+  }
+}
+function dateIsNotPast(req, res, next) {
+  const { reservation_date } = req.body.data;
+  const today = new Date();
+  const dateString = reservation_date.split("-");
+  const resDate = new Date(
+    Number(dateString[0]),
+    Number(dateString[1]) - 1,
+    Number(dateString[2]),
+    0,
+    0,
+    1
+  );
+  if (resDate > today) {
+  next();
+  } else {
+    next({ status: 400, message: "reservation must be for a future date"});
+  }
+};
+
 /**
  * Create new reservation handler
  */
 async function create(req, res) {
   const data = await service.create(req.body.data);
+  console.log("data", data);
   res.status(201).json({ data });
 }
 module.exports = {
@@ -98,6 +138,8 @@ module.exports = {
     hasValidDate,
     peopleIsNumber,
     hasValidTime,
+    dateIsNotTuesday,
+    dateIsNotPast,
     asyncErrorBoundary(create),
   ],
   list: asyncErrorBoundary(list),
