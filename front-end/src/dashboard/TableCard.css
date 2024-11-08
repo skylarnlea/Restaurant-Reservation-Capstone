@@ -1,4 +1,5 @@
-.card {
+#tableGrid.card {
+    border-radius: 50px;
     position: relative;
 }
 
@@ -8,7 +9,7 @@
     left: 170px;
 }
 
-.alert {
+#tableGrid.alert {
     margin-bottom: 0px;
     text-align: center;
 }
