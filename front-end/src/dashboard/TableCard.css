@@ -1,0 +1,14 @@
+.card {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    bottom: 130px;
+    left: 170px;
+}
+
+.alert {
+    margin-bottom: 0px;
+    text-align: center;
+}
