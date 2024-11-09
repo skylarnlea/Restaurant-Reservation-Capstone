@@ -56,7 +56,7 @@ function hasProperties(...properties) {
 function tableNameHasValidLength(req, res, next) {
   const { table_name } = req.body.data;
   if (table_name.length < 2) {
-    next({ status: 400, message: "table name must be at least 2 characters"});
+    next({ status: 400, message: "table_name must be at least 2 characters"});
   }
   next();
 }
