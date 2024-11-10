@@ -69,6 +69,7 @@ function Dashboard({ date }) {
                 reservation_date={reservation.reservation_date}
                 reservation_time={reservation.reservation_time}
                 people={reservation.people}
+                status={reservation.status}
               />
             </div>
           ))}
@@ -91,6 +92,7 @@ function Dashboard({ date }) {
                 capacity={table.capacity}
                 reservation_id={table.reservation_id}
                 setTablesError={setTablesError}
+                loadReservations={loadReservations}
               />
             </div>
           ))}
