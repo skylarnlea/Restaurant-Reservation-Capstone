@@ -15,6 +15,7 @@ async function list(req, res, next) {
 const VALID_PROPERTIES = [
   "table_name",
   "capacity",
+  "reservation_id"
 ];
 
 function hasData(req, res, next) {
@@ -63,8 +64,8 @@ function tableNameHasValidLength(req, res, next) {
 
 function hasValidCapacity(req, res, next) {
   const { capacity } = req.body.data;
-  if (capacity < 1 || capacity > 8 || typeof capacity !== "number") {
-    next({ status: 400, message: "table capacity must be a number between 1 and 8" });
+  if (capacity < 1 || typeof capacity !== "number") {
+    next({ status: 400, message: "table capacity must be at least 1 person" });
   }
   next();
 }
@@ -98,7 +99,7 @@ async function reservationExists(req, res, next) {
        res.locals.table = table;
        return next();
      }
-     next({ status: 400, message: `table ${table_id} does not exist` });
+     next({ status: 404, message: `table ${table_id} does not exist` });
    }
 
    function tableIsOccupied(req, res, next) {
@@ -118,6 +119,14 @@ async function reservationExists(req, res, next) {
      next();
    }
 
+   function tableIsNotOccupied(req, res, next) {
+    const reservation_id = res.locals.table.reservation_id;
+    if (!reservation_id) {
+      return next({ status: 400, message: "table is not occupied" });
+    }
+    next();
+  }
+
    /**
     * Update table handler
     */
@@ -135,7 +144,8 @@ async function reservationExists(req, res, next) {
  */
 async function removeReservation(req, res) {
   await service.removeReservation(req.params.table_id);
-  res.sendStatus(204);
+  /* .end() sends empty response body (for tests) */
+  res.status(200).end();
 }
 
 module.exports = {
@@ -158,5 +168,9 @@ module.exports = {
       tableHasSufficientCapacity,
       asyncErrorBoundary(update),
     ],
-    removeReservation: asyncErrorBoundary(removeReservation),
-}
+    removeReservation: [
+      asyncErrorBoundary(tableExists), 
+      tableIsNotOccupied,
+      asyncErrorBoundary(removeReservation),
+    ],
+  }
