@@ -138,9 +138,31 @@ function isWithinBusinessHours(req, res, next) {
  */
 async function create(req, res) {
   const data = await service.create(req.body.data);
-  console.log("data", data);
   res.status(201).json({ data });
 }
+
+/**
+ * Check that given reservation exists
+ */
+async function reservationExists(req, res, next) {
+  const reservation_id = req.params.reservation_id;
+  const reservation = await service.read(reservation_id);
+  if (reservation) {
+    res.locals.reservation = reservation;
+    return next();
+  }
+  next({ status: 404, message: `reservation ${reservation_id} does not exist` });
+}
+
+/**
+ * Read given reservation by ID
+ */
+function read(req, res, next) {
+  const data = res.locals.reservation;
+  res.json({ data });
+}
+
+
 module.exports = {
   create: [
     hasData,
@@ -155,4 +177,8 @@ module.exports = {
     asyncErrorBoundary(create),
   ],
   list: asyncErrorBoundary(list),
+  read: [
+    asyncErrorBoundary(reservationExists),
+    read,
+  ],
 };

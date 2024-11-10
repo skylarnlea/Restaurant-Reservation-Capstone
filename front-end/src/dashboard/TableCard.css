@@ -1,0 +1,18 @@
+#tableGrid.card {
+    border-radius: 40px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+#tableGrid.badge {
+    position: absolute;
+    top: 12px;
+    right:12px;
+    border-radius: 10px 25px 10px 10px;
+    font-size: small;
+}
+
+#tableGrid.alert {
+    margin-bottom: 0px;
+    text-align: center;
+}

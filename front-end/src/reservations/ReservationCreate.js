@@ -23,10 +23,6 @@ function ReservationCreate() {
         setReservation({ ...reservation, [target.name]: target.value });
     }
 
-    // const day = new Date(reservation.reservation_date).getUTCDay();
-    // const date = new Date(reservation.reservation_date).setHours(0, 0, 0, 0);
-    // const today = new Date().setHours(0, 0, 0, 0);
-
     //submit handler
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -43,8 +39,10 @@ function ReservationCreate() {
 
         return (
           <main>
-            <h1>Create a New Reservation</h1>
-            <ErrorAlert error={error} setError={setError} />
+            <div className="d-md-flex mb-3">
+              <h1>Create a New Reservation</h1>
+              <ErrorAlert error={error} setError={setError}/>
+            </div>
 
             {/* Reservation form */}
             <form onSubmit={handleSubmit}>
