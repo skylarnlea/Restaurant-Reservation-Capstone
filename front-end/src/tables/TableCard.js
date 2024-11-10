@@ -10,7 +10,7 @@ function TableCard({
     capacity,
     reservation_id,
     setTablesError,
-    loadReservations,
+    loadReservationsAndTables,
   }) {
 
     const handleFinish = (event) => {
@@ -19,8 +19,7 @@ function TableCard({
       if (window.confirm(message)) {
         removeReservation(table_id)
           .then(() => {
-            window.location.reload();
-            loadReservations();
+            loadReservationsAndTables();
           })
           .catch(setTablesError);
     }
@@ -36,6 +35,7 @@ function TableCard({
         <p className="card-subtitle mb-2 text-muted">Reservation #{reservation_id}</p>
         <div 
           className={`alert ${reservation_id ? "alert-warning" : "alert-success"}`} 
+          id="statusWithFinishButton"
           role="alert" 
           data-table-id-status={table_id}
         >
