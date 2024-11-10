@@ -9,7 +9,8 @@ function TableCard({
     table_name,
     capacity,
     reservation_id,
-    setTablesError
+    setTablesError,
+    loadReservations,
   }) {
 
     const handleFinish = (event) => {
@@ -17,7 +18,10 @@ function TableCard({
       const message = "Is this table ready to seat new guests? This cannot be undone.";
       if (window.confirm(message)) {
         removeReservation(table_id)
-          .then(window.location.reload())
+          .then(() => {
+            window.location.reload();
+            loadReservations();
+          })
           .catch(setTablesError);
     }
   }
@@ -40,9 +44,9 @@ function TableCard({
             <button 
               type="button" 
               className="btn btn-dark"
+              id="finishButton"
               onClick={handleFinish}
               data-table-id-finish={table_id}
-              style={{marginLeft: "5px"}}
               >
                 Finish
               </button>
