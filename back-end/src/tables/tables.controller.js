@@ -140,7 +140,7 @@ async function reservationExists(req, res, next) {
     * Adds reservation_id to table
     * Changes reservation status to "seated"
     */
-   async function update(req, res) {
+   async function seatReservation(req, res) {
      const updatedTable = {
        ...req.body.data,
        table_id: res.locals.table.table_id,
@@ -154,15 +154,34 @@ async function reservationExists(req, res, next) {
    }
 
 /**
+ * Retrieve reservation to remove from table (see below)
+ */
+async function getReservation(req, res, next) {
+  const reservation_id = res.locals.table.reservation_id;
+  const reservation = await service.readReservation(reservation_id);
+  if (reservation) {
+    res.locals.reservation = reservation;
+    return next();
+  }
+  next({ status: 404, message: `reservation ${reservation_id} not found` });
+}
+
+/**
  * Removes reservation_id from table
+ * Changes reservation status to "finished"
  */
 async function removeReservation(req, res) {
+  const table = res.locals.table;
+  const updatedTable = {
+    ...table,
+    reservation_id: null,
+  };
   const updatedReservation = {
     ...res.locals.reservation,
+    status: "finished",
   }
-  await service.removeReservation(req.params.table_id, updatedReservation);
-  /* .end() sends empty response body (for tests) */
-  res.status(200).end();
+  const data = await service.update(updatedTable, updatedReservation);
+  res.json({ data });
 }
 
 module.exports = {
@@ -175,7 +194,7 @@ module.exports = {
       asyncErrorBoundary(create),
     ],
     list: asyncErrorBoundary(list),
-    update: [
+    seatReservation: [
       asyncErrorBoundary(reservationExists),
       asyncErrorBoundary(tableExists),
       hasData,
@@ -184,11 +203,12 @@ module.exports = {
       reservationIsAlreadySeated,
       tableIsOccupied,
       tableHasSufficientCapacity,
-      asyncErrorBoundary(update),
+      asyncErrorBoundary(seatReservation),
     ],
     removeReservation: [
       asyncErrorBoundary(tableExists), 
       tableIsNotOccupied,
+      asyncErrorBoundary(getReservation),
       asyncErrorBoundary(removeReservation),
     ],
   }
