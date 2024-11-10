@@ -3,7 +3,7 @@ import { listReservations, listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationList from "../reservations/ReservationList";
 import DateNavButtons from "./DateNavButtons";
-import TableCard from "./TableCard";
+import TableCard from "../tables/TableCard";
 
 /**
  * Defines the dashboard page.
@@ -61,7 +61,7 @@ function Dashboard({ date }) {
         <div className="reservationList">
           <ReservationList reservations={reservations} />
         </div>
-        
+
         <div className="dateNav" style={{marginBottom: "17px"}}>
           <DateNavButtons currentDate={date} />
         </div>
