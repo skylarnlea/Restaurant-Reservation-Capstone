@@ -35,7 +35,7 @@ function TableCard({
         <p className="card-subtitle mb-2 text-muted">Reservation #{reservation_id}</p>
         <div 
           className={`alert ${reservation_id ? "alert-warning" : "alert-success"}`} 
-          id="statusWithFinishButton"
+          id={table_id}
           role="alert" 
           data-table-id-status={table_id}
         >
