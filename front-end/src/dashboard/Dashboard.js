@@ -19,6 +19,7 @@ function Dashboard({ date }) {
 
   useEffect(() => {
     loadReservationsAndTables();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
 
   function loadReservations() {
