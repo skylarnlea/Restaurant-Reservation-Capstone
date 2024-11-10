@@ -55,7 +55,7 @@ function Search() {
     {/* Reservations */}
     <div className="reservationsList">
         {reservations.length ? 
-        <ReservationsList reservations={reservations} />
+        <ReservationList reservations={reservations} />
         :
         <h3>No reservations found</h3>
         }
