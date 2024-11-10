@@ -28,18 +28,22 @@ function readReservation(reservation_id) {
       .first();
 }
 
-function update(updatedTable) {
-    return knex("tables")
+async function update(updatedTable, updatedReservation) {
+  const trx = await knex.transaction();
+  return trx("tables")
       .select("*")
       .where({"table_id": updatedTable.table_id})
       .update(updatedTable, "*")
-      .then(updatedRecords => updatedRecords[0]);
-}
-
-function removeReservation(table_id) {
-  return knex("tables")
-    .where({"table_id": table_id})
-    .update('reservation_id', null);
+      .then(updatedRecords => updatedRecords[0])
+      .then(() => {
+        return trx("reservations")
+          .select("*")
+          .where({"reservation_id": updatedReservation.reservation_id})
+          .update(updatedReservation, "*")
+          .then(updatedResRecords => updatedResRecords[0]);
+      })
+      .then(trx.commit)
+      .catch(trx.rollback);
 }
 
 module.exports = {
@@ -48,5 +52,4 @@ module.exports = {
       read,
       readReservation,
       update,
-      removeReservation,
 }

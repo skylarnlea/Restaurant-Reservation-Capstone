@@ -127,25 +127,62 @@ async function reservationExists(req, res, next) {
     next();
   }
 
+  function reservationIsAlreadySeated(req, res, next) {
+    const currentStatus = res.locals.reservation.status;
+    if (currentStatus && currentStatus === "seated") {
+      return next({ status: 400, message: "table is already seated" });
+    }
+    next();
+  }
+
    /**
     * Update table handler
+    * Adds reservation_id to table
+    * Changes reservation status to "seated"
     */
-   async function update(req, res) {
+   async function seatReservation(req, res) {
      const updatedTable = {
        ...req.body.data,
        table_id: res.locals.table.table_id,
      };
-     const data = await service.update(updatedTable);
+     const updatedReservation = {
+      ...res.locals.reservation,
+      status: "seated",
+     }
+     const data = await service.update(updatedTable, updatedReservation);
      res.json({ data });
    }
 
 /**
- * Remove reservation_id from table
+ * Retrieve reservation to remove from table (see below)
+ */
+async function getReservation(req, res, next) {
+  const reservation_id = res.locals.table.reservation_id;
+  const reservation = await service.readReservation(reservation_id);
+  if (reservation) {
+    res.locals.reservation = reservation;
+    return next();
+  }
+  next({ status: 404, message: `reservation ${reservation_id} not found` });
+}
+
+/**
+ * Removes reservation_id from table
+ * Changes reservation status to "finished"
  */
 async function removeReservation(req, res) {
-  await service.removeReservation(req.params.table_id);
-  /* .end() sends empty response body (for tests) */
-  res.status(200).end();
+  const table = res.locals.table;
+  const updatedTable = {
+    ...table,
+    reservation_id: null,
+  };
+  const updatedReservation = {
+    ...res.locals.reservation,
+    reservation_id: res.locals.reservation.reservation_id,
+    status: "finished",
+  }
+  const data = await service.update(updatedTable, updatedReservation);
+  res.json({ data });
 }
 
 module.exports = {
@@ -158,19 +195,21 @@ module.exports = {
       asyncErrorBoundary(create),
     ],
     list: asyncErrorBoundary(list),
-    update: [
+    seatReservation: [
       asyncErrorBoundary(reservationExists),
       asyncErrorBoundary(tableExists),
       hasData,
       hasOnlyValidProperties,
       hasProperties("reservation_id"),
+      reservationIsAlreadySeated,
       tableIsOccupied,
       tableHasSufficientCapacity,
-      asyncErrorBoundary(update),
+      asyncErrorBoundary(seatReservation),
     ],
     removeReservation: [
       asyncErrorBoundary(tableExists), 
       tableIsNotOccupied,
+      asyncErrorBoundary(getReservation),
       asyncErrorBoundary(removeReservation),
     ],
   }

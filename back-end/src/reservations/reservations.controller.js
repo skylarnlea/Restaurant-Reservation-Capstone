@@ -25,6 +25,7 @@ const VALID_PROPERTIES = [
   "reservation_date",
   "reservation_time",
   "people",
+  "status",
 ];
 function hasData(req, res, next) {
   if (req.body.data) {
@@ -133,6 +134,37 @@ function isWithinBusinessHours(req, res, next) {
   }
 }
 
+function hasDefaultBookedStatus(req, res, next) {
+  const { status } = req.body.data;
+  if (status && status !== "booked") {
+    next({ status: 400, message: `A new reservation cannot have a status of ${status}` });
+  } else {
+    next();
+  }
+}
+
+function hasValidStatus(req, res, next) {
+  const validStatuses = ["booked", "seated", "finished"];
+  const { status } = req.body.data;
+  if (status && !validStatuses.includes(status)) {
+    next({ 
+      status: 400, 
+      message: `Invalid status: '${status}.' Status must be either 'booked', 'seated', or 'finished.' `
+    });
+  } else {
+    next();
+  }
+}
+
+function isFinished(req, res, next) {
+  const currentStatus = res.locals.reservation.status;
+  if (currentStatus === "finished") {
+    next({ status: 400, message: "A finished reservation cannot be updated." });
+  } else {
+    next();
+  }
+}
+
 /**
  * Create new reservation handler
  */
@@ -157,8 +189,20 @@ async function reservationExists(req, res, next) {
 /**
  * Read given reservation by ID
  */
-function read(req, res, next) {
+function read(req, res) {
   const data = res.locals.reservation;
+  res.json({ data });
+}
+
+/**
+ * Update reservation by ID
+ */
+async function update(req, res) {
+  const updatedReservation = {
+    ...req.body.data,
+    reservation_id: res.locals.reservation.reservation_id,
+  };
+  const data = await service.update(updatedReservation);
   res.json({ data });
 }
 
@@ -174,11 +218,19 @@ module.exports = {
     notOnTuesday,
     notPastDate,
     isWithinBusinessHours,
+    hasDefaultBookedStatus,
     asyncErrorBoundary(create),
   ],
   list: asyncErrorBoundary(list),
   read: [
     asyncErrorBoundary(reservationExists),
     read,
+  ],
+  update: [
+    hasData,
+    asyncErrorBoundary(reservationExists),
+    hasValidStatus,
+    isFinished,
+    asyncErrorBoundary(update),
   ],
 };
