@@ -34,9 +34,8 @@ function Seat() {
   // Handle table selection //
   const handleChange = ({ target }) => {
     setSelectedTable({ ...selectedTable, [target.name]: target.value });
-    console.log(target.value);
   }
-  
+
   // Submit and send PUT request to update table //
   const handleSubmit = (event) => {
     event.preventDefault();
