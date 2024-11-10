@@ -6,20 +6,18 @@ import "./Search.css";
 
 function Search() {
   const [error, setError] = useState(null);
-  const [mobile, setMobile] = useState("");
+  const [mobile_number, setMobileNumber] = useState("");
   const [reservations, setReservations] = useState([]);
   
   // Change handler //
   const handleChange = ({ target }) => {
-    setMobile(target.value);
+    setMobileNumber(target.value);
   }
 
   // Handle find //
   const handleFind = (event) => {
     event.preventDefault();
-    console.log(mobile);
-    // Does this work?
-    listReservations({ mobile })
+    listReservations({ mobile_number })
       .then((reservations) => setReservations(reservations))
       .catch((error) => setError(error));
   }
@@ -39,14 +37,14 @@ function Search() {
           name="mobile_number"
           className="form-control" 
           onChange={handleChange}
-          value={mobile}
+          value={mobile_number}
           placeholder="Enter a customer's phone number" 
           aria-label="Enter a customer's phone number" 
           aria-describedby="button-addon2" 
         />
         <button 
           className="btn btn-outline-secondary" 
-          type="button" 
+          type="submit" 
           id="button-addon2"
           onClick={handleFind} 
         >
@@ -56,10 +54,10 @@ function Search() {
 
     {/* Reservations */}
     <div className="reservationsList">
-        {reservations ? 
+        {reservations.length ? 
         <ReservationsList reservations={reservations} />
         :
-        "No reservations found"
+        <h3>No reservations found</h3>
         }
     </div>
 
