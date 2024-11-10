@@ -6,6 +6,7 @@ import { today } from "../utils/date-time";
 import ReservationCreate from "../reservations/ReservationCreate";
 import TablesCreate from "../tables/TablesCreate";
 import Seat from "../seats/Seat";
+import Search from "../search/Search";
 import useQuery from "../utils/useQuery";
 
 /**
@@ -43,6 +44,10 @@ function Routes() {
 
       <Route path="/tables/new">
         <TablesCreate />
+      </Route>
+
+      <Route path="/search">
+        <Search />
       </Route>
 
       <Route>
