@@ -1,6 +1,5 @@
 import React from "react";
 import { removeReservation } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
 import "./TableCard.css";
 
 
