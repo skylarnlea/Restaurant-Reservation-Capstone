@@ -26,9 +26,12 @@ function ReservationEdit() {
        
     const handleSubmit = (event) => {
         event.preventDefault();
-        updateReservation(reservation)
-          .then(history.go(-1))
-          .catch((error) => setError(error));
+        try {
+            updateReservation(reservation)
+              .then(history.go(-1));
+          } catch (error) {
+            setError(error);
+          }
     };
 
   return (
@@ -50,7 +53,7 @@ function ReservationEdit() {
               placeholder={reservation.first_name}
               className="form-control"
               onChange={handleChange}
-              value={reservation.first_name}
+              value={`${reservation.first_name}`}
               required
             />
           </div>
@@ -63,7 +66,7 @@ function ReservationEdit() {
               placeholder={reservation.last_name}
               className="form-control"
               onChange={handleChange}
-              value={reservation.last_name}
+              value={`${reservation.last_name}`}
               required
             />
           </div>
@@ -77,7 +80,7 @@ function ReservationEdit() {
             placeholder={reservation.mobile_number}
             className="form-control"
             onChange={handleChange}
-            value={reservation.mobile_number}
+            value={`${reservation.mobile_number}`}
             pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
             required
           />
@@ -90,7 +93,7 @@ function ReservationEdit() {
             id="reservation_date"
             className="form-control" 
             onChange={handleChange}
-            value={reservation.reservation_date}
+            value={`${reservation.reservation_date}`}
             pattern="\d{4}-\d{2}-\d{2}"
             required
           />
@@ -104,7 +107,7 @@ function ReservationEdit() {
             placeholder={reservation.reservation_time}
             className="form-control" 
             onChange={handleChange}
-            value={reservation.reservation_time} 
+            value={`${reservation.reservation_time}`}  
             pattern="[0-9]{2}:[0-9]{2}"
             required
           />
@@ -118,7 +121,7 @@ function ReservationEdit() {
             placeholder={reservation.people}
             className="form-control"
             onChange={handleChange}
-            value={reservation.people}
+            value={`${reservation.people}`}
             min="1"
             max="8"
             required
