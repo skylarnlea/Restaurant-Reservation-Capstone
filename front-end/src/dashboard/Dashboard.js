@@ -20,7 +20,7 @@ function Dashboard({ date }) {
   useEffect(() => {
     loadReservationsAndTables();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date, reservations]);
+  }, [date]);
 
   function loadReservations() {
     const abortController = new AbortController();
