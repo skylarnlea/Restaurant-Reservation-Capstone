@@ -230,16 +230,8 @@ module.exports = {
     asyncErrorBoundary(reservationExists),
     read,
   ],
-  update: [
+  updateStatus: [
     hasData,
-    hasOnlyValidProperties,
-    hasProperties("first_name", "last_name", "mobile_number", "reservation_date", "reservation_time", "people"),
-    hasValidDate,
-    peopleIsNumber,
-    hasValidTime,
-    notOnTuesday,
-    notPastDate,
-    isWithinBusinessHours,
     asyncErrorBoundary(reservationExists),
     hasValidStatus,
     isFinished,
