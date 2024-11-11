@@ -20,15 +20,15 @@ function TableCard({
 
     const handleFinish = (event) => {
       event.preventDefault();
-      //const message = "Is this table ready to seat new guests? This cannot be undone.";
-      ///if (window.confirm(message)) {
+      const message = "Is this table ready to seat new guests? This cannot be undone.";
+      if (window.confirm(message)) {
         removeReservation(table_id)
           .then(() => {
             loadReservationsAndTables();
           })
           .then(handleClose)
           .catch(setTablesError);
-    //}
+    }
   }
 
 
