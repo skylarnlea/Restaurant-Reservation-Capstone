@@ -50,11 +50,12 @@ function ReservationCard({
       </span></h5>
       
       {/* Cancel Reservation Button */}
+      {status !== "cancelled" &&
       <CancelReservationButton
           reservation_id={reservation_id}
           setReservationsError={setReservationsError}
           loadReservationsAndTables={loadReservationsAndTables}
-      />
+      />}
       </div>
     </div>
   );
