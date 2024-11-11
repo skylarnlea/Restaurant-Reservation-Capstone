@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { readReservation } from "../utils/api";
+import { readReservation, updateReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 
 function ReservationEdit() {
@@ -19,6 +19,17 @@ function ReservationEdit() {
     loadReservation();
   }, [reservation_id]);
 
+    // Handlers //
+    const handleChange = ({ target }) => {
+        setReservation({ ...reservation, [target.name]: target.value });
+    };
+       
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        updateReservation(reservation)
+          .then(history.go(-1))
+          .catch((error) => setError(error));
+    };
 
   return (
     <main>
@@ -77,7 +88,6 @@ function ReservationEdit() {
             type="date"
             name="reservation_date" 
             id="reservation_date"
-            placeholder={reservation.reservation_date}
             className="form-control" 
             onChange={handleChange}
             value={reservation.reservation_date}
@@ -121,15 +131,8 @@ function ReservationEdit() {
         >
           Submit
         </button>
-         <button
-          type="reset"
-           className="btn btn-secondary btn-lg"
-          style={{marginRight: "10px"}}
-          onClick={handleReset}
-        >
-          Reset Form
-        </button>
-         <button
+
+        <button
           type="button"
           className="btn btn-secondary btn-lg"
           onClick={() => history.go(-1)}
