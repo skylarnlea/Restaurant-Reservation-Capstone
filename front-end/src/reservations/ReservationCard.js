@@ -10,7 +10,9 @@ function ReservationCard({
     reservation_date, 
     reservation_time, 
     people,
-    status
+    status,
+    setReservationsError,
+    loadReservationsAndTables
 }) {
 
   return (
@@ -48,9 +50,14 @@ function ReservationCard({
       </span></h5>
       
       {/* Cancel Reservation Button */}
-      <CancelReservationButton reservation_id={reservation_id} />
+      <CancelReservationButton
+          reservation_id={reservation_id}
+          setReservationsError={setReservationsError}
+          loadReservationsAndTables={loadReservationsAndTables}
+      />
       </div>
     </div>
   );
 }
+
 export default ReservationCard;
