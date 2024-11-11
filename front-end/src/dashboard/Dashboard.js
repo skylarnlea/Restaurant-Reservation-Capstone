@@ -59,7 +59,11 @@ function Dashboard({ date }) {
         <ErrorAlert error={reservationsError} setError={setReservationsError} />
 
         <div className="reservationList">
-          <ReservationList reservations={reservations} />
+        <ReservationList 
+            reservations={reservations}
+            setReservationsError={setReservationsError}
+            loadReservationsAndTables={loadReservationsAndTables} 
+          />
         </div>
 
         <div className="dateNav" style={{marginBottom: "17px"}}>
