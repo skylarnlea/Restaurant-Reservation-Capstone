@@ -26,12 +26,9 @@ function ReservationEdit() {
        
     const handleSubmit = (event) => {
         event.preventDefault();
-        try {
             updateReservation(reservation)
-              .then(history.go(-1));
-          } catch (error) {
-            setError(error);
-          }
+                .then(history.go(-1))
+                .catch((error) => setError(error));
     };
 
   return (
