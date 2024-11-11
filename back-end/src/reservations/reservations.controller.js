@@ -23,6 +23,7 @@ async function list(req, res) {
  * Check for data and valid properties
  */
 const VALID_PROPERTIES = [
+  "reservation_id",
   "first_name",
   "last_name",
   "mobile_number",
@@ -30,7 +31,10 @@ const VALID_PROPERTIES = [
   "reservation_time",
   "people",
   "status",
+  "created_at",
+  "updated_at"
 ];
+
 function hasData(req, res, next) {
   if (req.body.data) {
     return next();
@@ -229,6 +233,20 @@ module.exports = {
   read: [
     asyncErrorBoundary(reservationExists),
     read,
+  ],
+  update: [
+    asyncErrorBoundary(reservationExists),
+    hasData,
+    hasOnlyValidProperties,
+    hasProperties("first_name", "last_name", "mobile_number", "reservation_date", "reservation_time", "people"),
+    hasValidDate,
+    peopleIsNumber,
+    hasValidTime,
+    notOnTuesday,
+    notPastDate,
+    isWithinBusinessHours,
+    hasDefaultBookedStatus,
+    asyncErrorBoundary(update),
   ],
   updateStatus: [
     hasData,
