@@ -1,0 +1,48 @@
+/**
+  Font and Colors
+**/
+@import url('https://fonts.googleapis.com/css2?family=Khula&display=swap');
+
+body {
+    background-color: #F8F8F4;
+    box-sizing: border-box;
+    font-family: 'Khula', sans-serif;
+}
+
+.side-bar {
+    background-color: #a2b9bc;
+}
+
+.sidebar-brand-text {
+    color: #F8F8F4;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #aeb4bc;
+}
+
+h1 {
+    font-weight: 900;
+    font-size: 3em;
+    letter-spacing: 2px;
+    color: #07424D
+}
+
+.card {
+    background-color: #F8F8F4;
+}
+
+.card-header,
+.card-footer {
+    background-color: #1F2A3810;
+}
+
+.btn-group {
+    background-color: #07424D;
+    border-radius: 10px;
+}
+
+.badge {
+    background-color: #FF5958;
+    color: white;
+}
