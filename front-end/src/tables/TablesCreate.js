@@ -18,9 +18,11 @@ function TableCreate() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        createTable(table)
+        const abortController = new AbortController();
+        createTable(table, abortController.signal)
             .then(() => history.push("/dashboard"))
             .catch((error) => setError(error));
+        return () => abortController.abort();
     }
 
 
