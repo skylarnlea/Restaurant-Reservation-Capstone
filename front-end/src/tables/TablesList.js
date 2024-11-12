@@ -1,20 +1,23 @@
 import React from "react";
 import TableCard from "./TableCard";
-import ErrorAlert from "../layout/ErrorAlert";
 
-function TablesList({ tables, tablesError }) {
+function TablesList({ tables, setTablesError, loadReservationsAndTables }) {
+  
   return (
-    <>
-      <ErrorAlert error={tablesError} />
-      
-      <div id="tableGrid" className="row row-cols-2">
-        {tables.map((table) => (
-          <div className="col" key={table.table_id}>
-            <TableCard />
-          </div>
-        ))}
-      </div>
-    </>
+    <div id="tableGrid" className="tables-grid">
+      {tables.map((table) => (
+        <div className="tables-card" key={table.table_id}>
+          <TableCard
+            table_id={table.table_id}
+            table_name={table.table_name}
+            capacity={table.capacity}
+            reservation_id={table.reservation_id}
+            setTablesError={setTablesError}
+            loadReservationsAndTables={loadReservationsAndTables}
+          />
+        </div>
+      ))}
+    </div>
   );
 }
 
