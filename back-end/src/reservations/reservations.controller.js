@@ -4,7 +4,7 @@ const { today } = require("../utils/date-time");
 
 /**
  * List handler for reservation resources
- * Lists reservations by query data, query mobile_number, or today's date
+ *  Lists reservations by query data, query mobile_number, or today's date
  */
 async function list(req, res) {
   if (req.query.date) {
@@ -14,8 +14,8 @@ async function list(req, res) {
     const data = await service.search(req.query.mobile_number);
     res.json({ data });
   } else {
-      const data = await service.list(today());
-      res.json({ data });
+    const data = await service.list(today());
+    res.json({ data });
   }
 }
 
@@ -41,6 +41,7 @@ function hasData(req, res, next) {
   }
   next({ status: 400, message: "Body must have data property"});
 }
+
 function hasOnlyValidProperties(req, res, next) {
   const { data = {} } = req.body;
   const invalidProperties = Object.keys(data).filter(
@@ -51,6 +52,7 @@ function hasOnlyValidProperties(req, res, next) {
   }
   next();
 }
+
 function hasProperties(...properties) {
   return function (req, res, next) {
     const { data = {} } = req.body;
@@ -77,6 +79,7 @@ function hasValidDate(req, res, next) {
   }
   next();
 }
+
 function hasValidTime(req, res, next) {
   const { reservation_time } = req.body.data;
   const timeRegex = new RegExp(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/);
@@ -95,7 +98,7 @@ function peopleIsNumber(req, res, next) {
   next();
 }
 
-function notOnTuesday(req, res, next) {
+function isNotTuesday(req, res, next) {
   const { reservation_date } = req.body.data;
   const dateString = reservation_date.split("-");
   const numDate = new Date(
@@ -113,13 +116,14 @@ function notOnTuesday(req, res, next) {
   }
 }
 
-function notPastDate(req, res, next) {
+function isNotPastDate(req, res, next) {
   const { reservation_date, reservation_time } = req.body.data;
   const [hour, minute] = reservation_time.split(":");
   let [year, month, day] = reservation_date.split("-");
   month -= 1;
   const reservationDate = new Date(year, month, day, hour, minute, 59, 59).getTime();
   const today = new Date().getTime();
+
   if (reservationDate > today) {
     next();
   } else {
@@ -128,7 +132,7 @@ function notPastDate(req, res, next) {
       message: "reservation date and time must be set in the future",
     });
   }
-}
+};
 
 function isWithinBusinessHours(req, res, next) {
   const { reservation_time } = req.body.data;
@@ -151,34 +155,34 @@ function hasDefaultBookedStatus(req, res, next) {
   }
 }
 
-function hasValidStatus(req, res, next) {
+ function hasValidStatus(req, res, next) {
   const validStatuses = ["booked", "seated", "finished", "cancelled"];
   const { status } = req.body.data;
   if (status && !validStatuses.includes(status)) {
     next({ 
       status: 400, 
-      message: `Invalid status: '${status}.' Status must be either 'booked', 'seated', or 'finished', or 'cancelled'. `
+      message: `Invalid status: '${status}.' Status must be either 'booked', 'seated', 'finished,' or 'cancelled.' `
     });
   } else {
     next();
   }
-}
+ }
 
-function isFinished(req, res, next) {
+ function isFinished(req, res, next) {
   const currentStatus = res.locals.reservation.status;
   if (currentStatus === "finished") {
     next({ status: 400, message: "A finished reservation cannot be updated." });
   } else {
     next();
   }
-}
+ }
 
 /**
- * Create new reservation handler
+ * Create a new reservation
  */
 async function create(req, res) {
   const data = await service.create(req.body.data);
-  res.status(201).json({ data });
+  res.status(201).json({ data: data });
 }
 
 /**
@@ -223,8 +227,8 @@ module.exports = {
     hasValidDate,
     peopleIsNumber,
     hasValidTime,
-    notOnTuesday,
-    notPastDate,
+    isNotTuesday,
+    isNotPastDate,
     isWithinBusinessHours,
     hasDefaultBookedStatus,
     asyncErrorBoundary(create),
@@ -242,8 +246,8 @@ module.exports = {
     hasValidDate,
     peopleIsNumber,
     hasValidTime,
-    notOnTuesday,
-    notPastDate,
+    isNotTuesday,
+    isNotPastDate,
     isWithinBusinessHours,
     hasDefaultBookedStatus,
     asyncErrorBoundary(update),

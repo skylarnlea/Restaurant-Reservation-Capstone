@@ -1,18 +1,18 @@
 const knex = require("../db/connection");
 
 function list(date) {
-    return knex("reservations")
-      .select("*")
-      .where({"reservation_date": date})
-      .andWhereNot({"status": "finished"})
-      .orderBy("reservation_time");
+  return knex("reservations")
+    .select("*")
+    .where({"reservation_date": date})
+    .andWhereNot({"status": "finished"})
+    .orderBy("reservation_time");
 }
 
 function create(newReservation) {
-    return knex("reservations")
-      .insert(newReservation)
-      .returning("*")
-      .then(createdRecords => createdRecords[0]);
+  return knex("reservations")
+    .insert(newReservation)
+    .returning("*")
+    .then(createdRecords => createdRecords[0]);
 }
 
 function read(reservation_id) {
