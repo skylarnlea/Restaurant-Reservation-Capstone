@@ -61,7 +61,7 @@ function Search() {
     {/* Reservations - displays "No reservations found" if length is zero */}
     <div className="reservationsList">
       {reservations.length ? 
-        <ReservationsList reservations={reservations} />
+        <ReservationList reservations={reservations} />
         :
         <h3>{reservationMessage}</h3>
       }

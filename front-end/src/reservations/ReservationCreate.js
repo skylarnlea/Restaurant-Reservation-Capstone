@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { createReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
-import "./ReservationCreate.css";
 
 function ReservationCreate() {
   const history = useHistory();
