@@ -76,9 +76,10 @@ function ReservationCreate() {
               <div className="mb-3">
                 <label htmlFor="mobile_number" className="form-label">Mobile Number</label>
                 <input
-                    type="tel"
+                    type="text"
                     name="mobile_number"
                     id="mobile_number"
+                    onChange={handleChange}
                     value={reservation.mobile_number}
                     pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
                     required
