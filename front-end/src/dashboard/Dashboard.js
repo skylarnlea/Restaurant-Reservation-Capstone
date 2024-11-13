@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { listReservations, listTables } from "../utils/api";
-import ErrorAlert from "../layout/ErrorAlert";
 import ReservationList from "../reservations/ReservationList";
+import TablesList from "../tables/TablesList";
 import DateNavButtons from "./DateNavButtons";
-import TableCard from "../tables/TableCard";
+import ErrorAlert from "../layout/ErrorAlert";
+import "./Dashboard.css";
 
 /**
  * Defines the dashboard page.
  * @param date
  *  the date for which the user wants to view reservations.
- * @returns {JSX.Element}
  */
 function Dashboard({ date }) {
+  
   const [reservations, setReservations] = useState([]);
   const [reservationsError, setReservationsError] = useState(null);
   const [tables, setTables] = useState([]);
   const [tablesError, setTablesError] = useState(null);
 
+  // Load Dashboard - reservations and tables, remove loading message //
   useEffect(() => {
     loadReservationsAndTables();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,18 +49,18 @@ function Dashboard({ date }) {
     return () => abortController.abort();
   }
 
-  /* If res exists, display info*/
+
     return (
-      <main>
+      <main className="dashboard">
         <h1>Dashboard</h1>
         <div className="d-md-flex flex-column">
-        {!reservations.length && <h2>No reservations on this date.</h2>}
+          {!reservations.length && <h2>No reservations on this date.</h2>}
         </div>
-        
-        <ErrorAlert error={reservationsError} setError={setReservationsError} />
 
+        {/* Reservations */}
         <div className="reservations-list">
           <h4 className="mb-2">Reservations for {date}</h4>
+          <ErrorAlert error={reservationsError} setError={setReservationsError} />
           <ReservationList 
             reservations={reservations}
             setReservationsError={setReservationsError}
@@ -66,7 +68,8 @@ function Dashboard({ date }) {
           />
         </div>
 
-        <div className="dateNav" style={{marginBottom: "17px"}}>
+        {/* Button Toolbar */}
+        <div className="date-nav">
           <DateNavButtons currentDate={date} />
         </div>
 
@@ -75,24 +78,16 @@ function Dashboard({ date }) {
           <div className="d-md-flex mb-3">
             <h4 className="mb-0">Tables</h4>
           </div>
+          {!tables && <h5 className="load-message">Loading...</h5>}
           <ErrorAlert error={tablesError} setError={setTablesError} />
-          <div id="tableGrid" className="row row-cols-4">
-            {tables.map((table) => (
-              <div className="col-sm-3" key={table.table_id}>
-                <TableCard
-                  table_id={table.table_id}
-                  table_name={table.table_name}
-                  capacity={table.capacity}
-                  reservation_id={table.reservation_id}
-                  setTablesError={setTablesError}
-                  loadReservationsAndTables={loadReservationsAndTables}
-                />
-              </div>
-            ))}
-          </div>
+          <TablesList 
+            tables={tables}
+            setTablesError={setTablesError}
+            loadReservationsAndTables={loadReservationsAndTables} 
+          />
         </div>
       </main>
     );
-  }
+}
 
 export default Dashboard;
