@@ -8,6 +8,8 @@ function Search() {
   const [error, setError] = useState(null);
   const [mobile_number, setMobileNumber] = useState("");
   const [reservations, setReservations] = useState([]);
+  const [reservationMessage, setReservationMessage] = useState("");
+
   
   // Change handler //
   const handleChange = ({ target }) => {
@@ -17,15 +19,20 @@ function Search() {
   // Handle find //
   const handleFind = (event) => {
     event.preventDefault();
-    listReservations({ mobile_number })
+    const abortController = new AbortController();
+    listReservations({ mobile_number }, abortController.signal)
       .then((reservations) => setReservations(reservations))
+      .then(setReservationMessage("No reservations found"))
       .catch((error) => setError(error));
+
+    return () => abortController.abort();
   }
+
 
 
   return (
     <main>
-      <div className="d-md-flex mb-3">
+      <div className="d-md-flex mb-3 justify-content-start">
         <h1>Reservation Search</h1>
         <ErrorAlert error={error} setError={setError} />
       </div>
@@ -43,22 +50,21 @@ function Search() {
           aria-describedby="button-addon2" 
         />
         <button 
-          className="btn btn-outline-secondary" 
+          className="btn" 
           type="submit" 
           id="button-addon2"
-          onClick={handleFind} 
-        >
-          Find
+          onClick={handleFind}>
+            Find
         </button>
       </div>
 
-    {/* Reservations */}
+    {/* Reservations - displays "No reservations found" if length is zero */}
     <div className="reservationsList">
-        {reservations.length ? 
-        <ReservationList reservations={reservations} />
+      {reservations.length ? 
+        <ReservationsList reservations={reservations} />
         :
-        <h3>No reservations found</h3>
-        }
+        <h3>{reservationMessage}</h3>
+      }
     </div>
 
     </main>

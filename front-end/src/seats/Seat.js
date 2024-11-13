@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { listTables, readReservation, updateTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
+import Seat from "./Seat.css";
 
 function Seat() {
   const reservation_id = useParams().reservation_id;
@@ -49,7 +50,9 @@ function Seat() {
       <div className="d-md-flex mb-3">
         <h1>Seating</h1>
       </div>
+
       <ErrorAlert error={error} setError={setError} />
+      
       <form onSubmit={handleSubmit}>
         <label htmlFor="table-select">
           Assign a table for reservation #{reservation_id}, for {reservation.people} people:
