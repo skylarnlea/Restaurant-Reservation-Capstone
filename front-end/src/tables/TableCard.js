@@ -30,7 +30,6 @@ function TableCard({
       <div className="card">
         <div className="card-body">
           <span className="badge capacity-badge">
-            <Icon className="people-icon" icon="bi:people" color="#f8f8f4" />
             {capacity}
           </span>
           <h6 className="card-title">{table_name}</h6>
