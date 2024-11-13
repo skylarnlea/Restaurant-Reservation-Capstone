@@ -51,15 +51,18 @@ function ReservationCard({
       }
 
       {/* Status Badge */}
-      <h5><span 
+      <h5>
+        <span 
          className="badge bg-info text-light"
          id="statusBadge"
-         data-reservation-id-status={reservation_id}>
-           {status}
-      </span></h5>
+         data-reservation-id-status={reservation_id}
+        >
+          {status}
+        </span>
+      </h5>
       
       {/* Cancel Reservation Button */}
-      {status !== "cancelled" &&
+      {status === "booked" &&
       <CancelReservationButton
           reservation_id={reservation_id}
           setReservationsError={setReservationsError}
