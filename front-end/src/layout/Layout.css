@@ -1,6 +1,7 @@
 .side-bar {
   background-color: #878f99;
   min-width: 200px;
+  padding-top: 5px;
 }
 
 .main-body {

@@ -7,7 +7,6 @@ import ErrorAlert from "../layout/ErrorAlert";
 function ReservationEdit() {
   const history = useHistory();
   const reservation_id = useParams().reservation_id;
-
   const [error, setError] = useState(null);
   const [reservation, setReservation] = useState("");
 
@@ -28,8 +27,7 @@ function ReservationEdit() {
   }
    
   const handleSubmit = (event) => {
-    event.preventDefault();
-    
+    event.preventDefault();   
     const abortController = new AbortController();
       updateReservation(reservation, abortController.signal)
       // Need to slice returned date/time to only display date, because API returns full date/time string

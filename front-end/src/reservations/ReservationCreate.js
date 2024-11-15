@@ -26,7 +26,6 @@ function ReservationCreate() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     const abortController = new AbortController();
     createReservation(reservation, abortController.signal)
     // Need to slice returned date/time to only display date, because API returns full date/time string

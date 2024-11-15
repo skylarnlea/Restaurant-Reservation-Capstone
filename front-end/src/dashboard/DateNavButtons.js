@@ -27,21 +27,24 @@ function DateNavButtons({ currentDate }) {
      <div className="btn-group" role="group">
       <button 
         type="button" 
-        className="btn btn-outline-secondary"
+        className="btn btn-outline-light"
         onClick={handlePrevious}
-        >Previous
+      >
+        Previous
       </button>
       <button 
         type="button" 
-        className="btn btn-outline-secondary"
+        className="btn btn-outline-light"
         onClick={handleToday}
-        >Today
+      >
+        Today
       </button>
       <button 
         type="button" 
-        className="btn btn-outline-secondary"
+        className="btn btn-outline-light"
         onClick={handleNext}
-        >Next
+      >
+        Next
       </button>
      </div>
     </div>

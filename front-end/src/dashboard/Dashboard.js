@@ -21,7 +21,6 @@ function Dashboard({ date }) {
   // Load Dashboard - reservations and tables, remove loading message //
   useEffect(() => {
     loadReservationsAndTables();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
 
   function loadReservations() {
