@@ -19,10 +19,10 @@ function Dashboard({ date }) {
   const [tablesError, setTablesError] = useState(null);
 
   // Load Dashboard - reservations and tables, remove loading message //
-  useEffect(() => {
-    loadReservationsAndTables();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [date]);
+  useEffect(
+    loadReservationsAndTables
+    // eslint-disable-next-line 
+    , [date]);
 
   function loadReservations() {
     const abortController = new AbortController();
