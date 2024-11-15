@@ -22,7 +22,7 @@ The reservations list consists of reservation cards that display the customer's 
 #### Tables
 Each table card displays the name of the table, the capacity, and the status. When the table is "free" it is defaulted to green and when it is "occupied" it is changed to yellow with a "finish" button within the table card. 
 
-[Dashboard](screenshots/dashboard.png "Dashboard")
+[Dashboard](screenshots/Dashboard.png "Dashboard")
 
 ### Create Reservation
 The "New Reservation" page (```/reservations/new```) allows the user to create a new reservation. Input fields include first and last name, mobile number, date, time, and number of guests. Each field has validations in the form component as well as in the back-end, and will display an error message in red at the top of the page for any violations. Clicking "Cancel" returns to the previous page, while clicking "Submit" sends a POST request to the server, creates the reservation, and displays it on the dashboard on it's given reservation day.
