@@ -1,7 +1,7 @@
 import React from "react";
 import ReservationCard from "./ReservationCard";
 
-function ReservationsList({ 
+function ReservationList({ 
   reservations, 
   setReservationsError, 
   loadReservationsAndTables 
@@ -29,4 +29,4 @@ function ReservationsList({
   );
 }
 
-export default ReservationsList;
+export default ReservationList;
