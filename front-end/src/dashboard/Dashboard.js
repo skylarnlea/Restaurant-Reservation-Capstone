@@ -21,6 +21,7 @@ function Dashboard({ date }) {
   // Load Dashboard - reservations and tables, remove loading message //
   useEffect(() => {
     loadReservationsAndTables();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [date]);
 
   function loadReservations() {
@@ -55,11 +56,11 @@ function Dashboard({ date }) {
         <div className="d-md-flex flex-column">
           {!reservations.length && <h2>No reservations on this date.</h2>}
         </div>
+        <ErrorAlert error={reservationsError} setError={setReservationsError} />
 
         {/* Reservations */}
         <div className="reservations-list">
           <h4 className="mb-2">Reservations for {date}</h4>
-          <ErrorAlert error={reservationsError} setError={setReservationsError} />
           <ReservationList 
             reservations={reservations}
             setReservationsError={setReservationsError}
