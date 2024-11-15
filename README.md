@@ -12,7 +12,7 @@ The following [user-stories](https://github.com/Thinkful-Ed/starter-restaurant-r
 - Express.js
 - Knex.js
 - PostgreSQL with Render
-- - RESTful API
+- RESTful API
 
 ## Features:
 ### Dashboard
