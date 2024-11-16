@@ -19,10 +19,10 @@ function Dashboard({ date }) {
   const [tablesError, setTablesError] = useState(null);
 
   // Load Dashboard - reservations and tables, remove loading message //
-  useEffect(
-    loadReservationsAndTables
+  useEffect(() => {
+    loadReservationsAndTables()
     // eslint-disable-next-line 
-    , [date]);
+  }, [date]);
 
   function loadReservations() {
     const abortController = new AbortController();
