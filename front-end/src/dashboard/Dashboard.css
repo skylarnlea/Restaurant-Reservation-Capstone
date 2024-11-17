@@ -26,7 +26,7 @@ h1, h2 {
 }
 
 .reservations-list .card {
-  max-width: 20rem;
+  min-width: 20rem;
 }
 
 .reservations-list .card-header {
