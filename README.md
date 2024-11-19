@@ -1,7 +1,7 @@
 # Final Capstone: Restaurant Reservation System - Periodic Tables
 "Periodic Tables" is the final capstone project for my online Software Enigneering program through [Chegg Skills] (https://www.chegg.com/skills/our-programs/web-development/). This full-stack web application creates a reservation system for restaurant personnel to utilize when a customer calls to request a reservation. This includes creating new reservations, editing existing reservations, searching for reservations, booking and seating reservations, cancelling reservations, and "finishing" reservations once those guests have completed their dining experience. I was able to apply all the skills and knowledge I have obtained throughout this course to create this user-friendly program.
 
-The following [user-stories](https://github.com/Thinkful-Ed/starter-restaurant-reservation.git) consist of both frontend and backend instructions including testing, error-handling, routes, and validation middleware. Migrations and seeds were created using Knex, alongside controllers and services to connect to and query the PostgreSQL database. Both the server and client sides were deployed through Render - take a look at my [final project](...).
+The following [user-stories](https://github.com/Thinkful-Ed/starter-restaurant-reservation.git) consist of both frontend and backend instructions including testing, error-handling, routes, and validation middleware. Migrations and seeds were created using Knex, alongside controllers and services to connect to and query the PostgreSQL database. Both the server and client sides were deployed through Render - take a look at my [final project](https://final-proj-restaurant-res-app.onrender.com).
 
 ## Languages and Frameworks used:
 - React and React Router
@@ -54,4 +54,21 @@ Each reservation card contains a "Seat" button that leads to the "Seating" page 
 An occupied table displays a "Finish" button. Clicking "Finish" displays a message to the user to confirm whether or not the reservation is finished and the table can become unoccupied. Clicking "Ok" sends a DELETE request to the server, removing the current reservation_id from the table to change the table's status to "free." The given reservation's status is changed to "finished." A reservation with a status of "finished" is not displayed on the dashboard.
 
 [Finish Table](screenshots/Finish_Table.png "Finish Table")
+
+
+## Installation
+Fork and clone [this repository](https://github.com/Thinkful-Ed/starter-restaurant-reservation.git).
+Run cp ./back-end/.env.sample ./back-end/.env.
+Update the ./back-end/.env file with the connection URL's to your PostgreSQL database instance.
+Run cp ./front-end/.env.sample ./front-end/.env.
+You should not need to make changes to the ./front-end/.env file unless you want to connect to a backend at a location other than http://localhost:5001.
+Run npm install to install project dependencies. Note: If you are having problems installing this project with Node 18 try using Node 16 instead (nvm use 16).
+Run npm run start:dev to start your server in development mode.
+
+### Database Setup
+Set up a new PostgreSQL database instance and be sure to append ?ssl=true to the end of the URL to ensure a secure connection.
+After setting up your database instance, connect DBeaver to your new database instances.
+
+### Knex
+Run npx knex commands from within the back-end folder, which is where the knexfile.js file is located.
 
