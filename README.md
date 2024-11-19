@@ -57,18 +57,18 @@ An occupied table displays a "Finish" button. Clicking "Finish" displays a messa
 
 
 ## Installation
-Fork and clone [this repository](https://github.com/Thinkful-Ed/starter-restaurant-reservation.git).
-Run cp ./back-end/.env.sample ./back-end/.env.
-Update the ./back-end/.env file with the connection URL's to your PostgreSQL database instance.
-Run cp ./front-end/.env.sample ./front-end/.env.
-You should not need to make changes to the ./front-end/.env file unless you want to connect to a backend at a location other than http://localhost:5001.
-Run npm install to install project dependencies. Note: If you are having problems installing this project with Node 18 try using Node 16 instead (nvm use 16).
-Run npm run start:dev to start your server in development mode.
+- Fork and clone [this repository](https://github.com/Thinkful-Ed/starter-restaurant-reservation.git).
+- Run cp ./back-end/.env.sample ./back-end/.env.
+- Update the ./back-end/.env file with the connection URL's to your PostgreSQL database instance.
+- Run cp ./front-end/.env.sample ./front-end/.env.
+- You should not need to make changes to the ./front-end/.env file unless you want to connect to a backend at a location other than http://localhost:5001.
+- Run npm install to install project dependencies. Note: If you are having problems installing this project with Node 18 try using Node 16 instead (nvm use 16).
+- Run npm run start:dev to start your server in development mode.
 
 ### Database Setup
-Set up a new PostgreSQL database instance and be sure to append ?ssl=true to the end of the URL to ensure a secure connection.
-After setting up your database instance, connect DBeaver to your new database instances.
+- Set up a new PostgreSQL database instance and be sure to append ?ssl=true to the end of the URL to ensure a secure connection.
+- After setting up your database instance, connect DBeaver to your new database instances.
 
 ### Knex
-Run npx knex commands from within the back-end folder, which is where the knexfile.js file is located.
+- Run npx knex commands from within the back-end folder, which is where the knexfile.js file is located.
 
