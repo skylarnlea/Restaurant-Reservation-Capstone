@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { listTables, readReservation, updateTable } from "../utils/api";
+import { listTables, readReservation, seatReservation } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import "./Seat.css";
 
@@ -40,7 +40,7 @@ function Seat() {
   // Submit and send PUT request to update table //
   const handleSubmit = (event) => {
     event.preventDefault();
-    updateTable(reservation_id, selectedTable.table_id, selectedTable)
+    seatReservation(reservation_id, selectedTable.table_id, selectedTable)
       .then(() => history.push("/dashboard"))
       .catch((error) => setError(error));
   }
