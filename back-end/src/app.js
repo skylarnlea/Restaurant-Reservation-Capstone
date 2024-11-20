@@ -12,7 +12,15 @@ const tablesRouter = require("./tables/tables.router");
 
 const app = express();
 
-app.use(cors());
+// CORS configuration to allow everything and support credentials
+const corsOptions = {
+    origin: "*", // Allow all origins (not recommended for production with credentials)
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type,Authorization",
+    credentials: true, // Allow credentials
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use("/reservations", reservationsRouter);
