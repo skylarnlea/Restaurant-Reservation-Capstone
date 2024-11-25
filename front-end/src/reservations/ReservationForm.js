@@ -8,7 +8,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
     <form onSubmit={handleSubmit}>
       <div className="row mb-3">
         <div className="col">
-          <label htmlFor="first_name" className="form-label">First Name</label>
+          <label for="first_name" className="form-label">First Name</label>
           <input
             type="text"
             name="first_name"
@@ -20,7 +20,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
           />
         </div>
         <div className="col">
-          <label htmlFor="last_name" className="form-label">Last Name</label>
+          <label for="last_name" className="form-label">Last Name</label>
           <input
             type="text"
             name="last_name"
@@ -34,7 +34,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="mobile_number" className="form-label">Mobile Number</label>
+        <label for="mobile_number" className="form-label">Mobile Number</label>
         <input
           type="tel"
           name="mobile_number"
@@ -48,7 +48,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="date" className="form-label">Date</label>
+        <label for="reservation_date" className="form-label">Date</label>
         <input 
           type="date"
           name="reservation_date" 
@@ -63,7 +63,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="time" className="form-label">Time</label>
+        <label for="reservation_time" className="form-label">Time</label>
         <input 
           type="time" 
           name="reservation_time"
@@ -78,7 +78,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="people" className="form-label">Number of Guests</label>
+        <label for="people" className="form-label">Number of Guests</label>
         <input
           type="number"
           name="people"
