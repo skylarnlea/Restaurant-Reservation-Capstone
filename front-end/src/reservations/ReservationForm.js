@@ -16,6 +16,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
             className="form-control"
             onChange={handleChange}
             value={`${reservation.first_name}`}
+            autocomplete="on"
             required
           />
         </div>
@@ -28,6 +29,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
             className="form-control"
             onChange={handleChange}
             value={`${reservation.last_name}`}
+            autocomplete="on"
             required
           />
         </div>
@@ -43,6 +45,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
           onChange={handleChange}
           value={`${reservation.mobile_number}`}
           pattern="^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$"
+          autocomplete="on"
           required
         />
       </div>
@@ -58,6 +61,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
           value={`${reservation.reservation_date}`}
           placeholder="YYYY-MM-DD" 
           pattern="\d{4}-\d{2}-\d{2}"
+          autocomplete="on"
           required
         />
       </div>
@@ -73,6 +77,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
           value={`${reservation.reservation_time}`}
           placeholder="HH:MM" 
           pattern="[0-9]{2}:[0-9]{2}"
+          autocomplete="on"
           required
         />
       </div>
@@ -88,6 +93,7 @@ function ReservationForm({ reservation, handleSubmit, handleChange }) {
           value={`${reservation.people}`}
           min="1"
           max="8"
+          autocomplete="on"
           required
         />
       </div>
