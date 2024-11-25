@@ -9,6 +9,10 @@ async function list(req, res, next) {
   res.json({ data });
 }
 
+function read(req, res) {
+  res.json({ data: res.locals.table });
+}
+
 /**
  * Check data for valid properties
  */
@@ -197,6 +201,7 @@ module.exports = {
       asyncErrorBoundary(create),
     ],
     list: asyncErrorBoundary(list),
+    read: [asyncErrorBoundary(tableExists), read],
     seatReservation: [
       asyncErrorBoundary(tableExists),
       hasData,
