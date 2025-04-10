@@ -57,7 +57,7 @@
     "npm-run-all": "^2.1.0",
     "puppeteer": "^23.8.0",
     "react-bootstrap": "^2.10.5",
-    "react-router-dom": "^6.28.0",
+    "react-router-dom": "^6.30.0",
     "supertest": "^7.0.0"
   },
   "devDependencies": {
