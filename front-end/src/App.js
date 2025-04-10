@@ -1,7 +1,6 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Layout from "./layout/Layout";
-import Dashboard from "./dashboard/Dashboard";
 
 /**
  * Defines the root application component.
@@ -9,13 +8,11 @@ import Dashboard from "./dashboard/Dashboard";
  */
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
+    <Switch>
+        <Route path="/">
+          <Layout />
         </Route>
-      </Routes>
-    </BrowserRouter>
+    </Switch>
   );
 }
 
