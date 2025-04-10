@@ -1,5 +1,4 @@
 const path = require("path");
-app.use(express.static(path.join(__dirname, "build")));
 
 require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
@@ -21,9 +20,6 @@ app.use("/tables", tablesRouter);
 
 app.use(notFound);
 app.use(errorHandler);
-
-app.use("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
-  });  
+ 
 
 module.exports = app;
